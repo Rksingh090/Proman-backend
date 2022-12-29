@@ -37,6 +37,9 @@ app.use(morgan('tiny'))
 app.use(helmet())
 app.use(express.json())
 
+
+console.log("Allowed origin");
+
 //corsorrigin
 const allowedOrigin = ["https://proman-khaki.vercel.app/"];
 app.use(cors({
