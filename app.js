@@ -3,11 +3,13 @@ const morgan = require('morgan')
 const dotenv = require('dotenv')
 const helmet = require('helmet')
 const mongoose = require('mongoose')
-const path = require('path')
-const { notFoundHandler, errorHandler } = require('./middleware')
 const cors = require('cors')
 
-// routes (apis)
+// middlewares 
+const { notFoundHandler, errorHandler } = require('./middleware')
+const path = require('path')
+
+// require routes
 const boardHandler = require('./api/boardHandler')
 const listHandler = require('./api/listHandler')
 const cardHandler = require('./api/cardHandler')
@@ -16,9 +18,13 @@ const activityHandler = require('./api/activityHandler')
 const notificationHandler = require('./api/notificationHandler')
 const chatHandler = require('./api/chatHandler')
 
-dotenv.config()
+// env config 
+dotenv.config();
+
+// express app
 const app = express()
 
+// mongo db connection
 mongoose.connect(process.env.DATABASE_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -26,17 +32,19 @@ mongoose.connect(process.env.DATABASE_URL, {
     useCreateIndex: true
 })
 
+// middlewares
 app.use(morgan('tiny'))
 app.use(helmet())
+app.use(express.json())
 
+//corsorrigin
 const allowedOrigin = [];
 app.use(cors({
     origin: allowedOrigin,
     credentials: true
 }))
 
-
-app.use(express.json())
+// routes and api 
 app.use('/api/user/', userHandler)
 app.use('/api/boards/', boardHandler)
 app.use('/api/lists/', listHandler)
@@ -45,11 +53,15 @@ app.use('/api/activities/', activityHandler)
 app.use('/api/notification/', notificationHandler)
 app.use('/api/chat/', chatHandler)
 
+//  error handling
+app.use(errorHandler);
 
-app.use(errorHandler)
+// static paths 
 const buildPath = path.join(__dirname, '..', 'build');
 app.use(express.static(buildPath));
 
+// not found handler 
 app.use(notFoundHandler)
 
+// export app 
 module.exports = app
