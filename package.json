@@ -1,0 +1,44 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "engines": {
+    "node": "16.15.0",
+    "npm": "7.20.0"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "start_frontend": "cd client && npm run start",
+    "dev": "nodemon index.js",
+    "test": "env-cmd -f ./config/test.env jest --watch --runInBand",    
+    "client": "cd ../client && npm run build",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
+    "run-both": "cd client",
+    "proman": "npm run dev",
+    "ci:build": "npm ci && cd ../client && npm ci"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "concurrently": "^5.3.0",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "helmet": "^3.23.3",
+    "http": "^0.0.1-security",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.24",
+    "morgan": "^1.10.0",
+    "socket.io": "^4.2.0"
+  },
+  "devDependencies": {
+    "env-cmd": "^10.1.0",
+    "eslint": "^6.6.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "nodemon": "^2.0.4",
+    "pre-commit": "^1.2.2",
+    "sinon": "^9.0.2",
+    "supertest": "^4.0.2"
+  }
+}
