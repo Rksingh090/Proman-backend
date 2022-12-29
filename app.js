@@ -5,6 +5,9 @@ const helmet = require('helmet')
 const mongoose = require('mongoose')
 const path = require('path')
 const { notFoundHandler, errorHandler } = require('./middleware')
+const cors = require('cors')
+
+// routes (apis)
 const boardHandler = require('./api/boardHandler')
 const listHandler = require('./api/listHandler')
 const cardHandler = require('./api/cardHandler')
@@ -14,9 +17,7 @@ const notificationHandler = require('./api/notificationHandler')
 const chatHandler = require('./api/chatHandler')
 
 dotenv.config()
-
 const app = express()
-
 
 mongoose.connect(process.env.DATABASE_URL, {
     useNewUrlParser: true,
@@ -25,9 +26,14 @@ mongoose.connect(process.env.DATABASE_URL, {
     useCreateIndex: true
 })
 
-
 app.use(morgan('tiny'))
 app.use(helmet())
+
+const allowedOrigin = [];
+app.use(cors({
+    origin: allowedOrigin,
+    credentials: true
+}))
 
 
 app.use(express.json())
