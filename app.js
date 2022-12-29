@@ -43,8 +43,7 @@ console.log("Allowed origin");
 //corsorrigin
 const allowedOrigin = ["https://proman-khaki.vercel.app"];
 app.use(cors({
-    origin: allowedOrigin,
-    credentials: true
+    origin: allowedOrigin
 }))
 
 // routes and api 
