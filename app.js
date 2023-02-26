@@ -41,7 +41,7 @@ app.use(express.json())
 console.log("Allowed origin");
 
 //corsorrigin
-const allowedOrigin = ["https://proman-khaki.vercel.app"];
+const allowedOrigin = ["https://proman-khaki.vercel.app", "http://localhost:3000"];
 app.use(cors({
     origin: allowedOrigin
 }))
